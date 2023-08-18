@@ -5,13 +5,13 @@ import Logo from '../utils/logo';
 import axios from 'axios';
 import { rootUrl } from '../config';
 
-const SignUpScreen = ({navigation}) => {
+const SignUpScreen = ({ navigation }) => {
   const [fname, setFname] = useState('');
-  const [lname, setLname] = useState('')
+  const [lname, setLname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignUp = async() => {
+  const handleSignUp = async () => {
     try {
       const response = await axios.post(`${rootUrl}/signup`, {
         fname: fname,
@@ -36,7 +36,7 @@ const SignUpScreen = ({navigation}) => {
       <View>
         <Title style={styles.title}>Farm Implement</Title>
         <Title style={styles.subTitle}>Register to farm Implement</Title>
-        </View>
+      </View>
       <TextInput
         label="First Name"
         value={fname}
