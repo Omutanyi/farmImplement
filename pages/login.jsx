@@ -10,7 +10,6 @@ const LoginScreen = ({navigation}) => {
   const [password, setPassword] = useState('');
   const logo = "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGZhcm1pbmclMjBsb2dvfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60";
 
-
   const handleLogin = async () => {
     try {
       const response = await axios.post(`${rootUrl}/login`, {
@@ -18,11 +17,11 @@ const LoginScreen = ({navigation}) => {
         password: password,
       });
 
-    if (response.data) {
-      console.log('Login user.', response.data.results[0]);
-      const loggedUser = response.data.results[0];
-      if (loggedUser.admin) {
-        navigation.navigate('Post Implements')
+    if (response) {
+      console.log('Login user.', response);
+      const loggedUser = response.data.user;
+      if (loggedUser?.admin == 1) {
+        navigation.navigate('Post Implements');
       } else {
         navigation.navigate('Work on Farm');
       }
@@ -30,7 +29,8 @@ const LoginScreen = ({navigation}) => {
         console.log('Login failed. Invalid credentials.');
       }
     } catch (error) {
-      console.error('Error during login--:', error.response);
+      console.log("log..", error)
+      console.error('Error during login--:', error);
     }
   };
 
@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 16,
+    backgroundColor: 'white',
   },
   logoContainer: {
     marginBottom: 15,

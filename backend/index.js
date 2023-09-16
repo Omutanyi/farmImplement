@@ -17,9 +17,8 @@ const authRoutes = require('./routes/accounts');
 const usersTable = 'users';
 
 app.post('/signup', async (req, res) => {
-  const { fname, lname, email, password } = req.body;
+  const { fname, lname, email, password, admin } = req.body;
   console.log(req.body)
-  debugger
 
   if (!fname || !lname || !email || !password) {
     return res.status(400).json({ error: 'All fields are required' });
@@ -41,6 +40,7 @@ app.post('/signup', async (req, res) => {
         lname,
         email,
         password: hashedPassword,
+        admin
       };
       db.query('INSERT INTO users SET ?', newUser, (error, result) => {
         if (error) {
@@ -56,18 +56,19 @@ app.post('/signup', async (req, res) => {
   }
 });
 
-app.post('/login', (req, res) => {
-  console.log("req,,", req)
+app.post('/login', async (req, res) => {
+  console.log("req:", req.body);
+
   if (!req.body) {
-    res.status(400).json({ error: 'Invalid request body' });
-    return;
+    return res.status(400).json({ error: 'Invalid request body' });
   }
+
   const { email, password } = req.body;
 
-  const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
-
-  try {
-    db.query('SELECT * FROM users WHERE email = ?', [email], async (error, results) => {
+  // Use parameterized query to prevent SQL injection
+  const query = `SELECT * FROM users WHERE email = '${email}';`
+  
+    db.query(query, async (error, results) => {
       if (error) {
         console.error('Error fetching user:', error);
         return res.status(500).json({ error: 'Internal server error' });
@@ -85,12 +86,9 @@ app.post('/login', (req, res) => {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
 
-      return res.status(200).json({ message: 'Login successful', results: results });
+      return res.status(200).json({ message: 'Login successful', user: user });
     });
-  } catch (error) {
-    console.error('Error comparing passwords:', error);
-    return res.status(500).json({ error: 'Internal server error' });
-  }
+
 });
 
 app.get('/:tableName', (req, res) => {

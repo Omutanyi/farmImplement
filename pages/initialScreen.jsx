@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet} from 'react-native';
 import { Button } from 'react-native-paper';
 import Logo from '../utils/logo';
 
@@ -11,11 +11,13 @@ const InitialScreen = ({ navigation }) => {
       <Button
       style={styles.customBtn}
         title="Login"
+        mode='contained'
         onPress={() => navigation.navigate('Login')}
       >Login</Button>
       <Button
       style={styles.customBtn}
         title="Signup"
+        mode='contained'
         onPress={() => navigation.navigate('Register')}
       >Register</Button>
     </View>
@@ -31,16 +33,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 90,
+    marginBottom: 60,
     color: 'black',
-    marginLeft: "15%"
+    // marginLeft: "15%"
   },
   customBtn: {
-    marginBottom: 40,
-    backgroundColor: 'white',
-    color: 'black',
-    fontSize: 24,
-    padding: 20
+    marginTop: 40
   },
 });
 

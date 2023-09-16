@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
 
 import React from 'react';
 import type { PropsWithChildren } from 'react';
@@ -44,6 +38,8 @@ import InitialScreen from './pages/initialScreen';
 import PostImplement from './pages/postImplement';
 import AddImplement from './pages/addImplement';
 import ViewImplements from './pages/viewImplements';
+import BookRevamp from './pages/bookRevamp';
+import Cart from './pages/cart';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -79,7 +75,7 @@ const Stack = createStackNavigator();
 
 const theme = {
   colors: {
-    primary: 'rgb(120, 69, 172)',
+    primary: 'blue',
     onPrimary: 'rgb(255, 255, 255)',
     primaryContainer: 'rgb(240, 219, 255)',
     onPrimaryContainer: 'rgb(44, 0, 81)',
@@ -151,6 +147,9 @@ function App({}): JSX.Element {
             </TouchableOpacity>
           ),
         })} />
+        <Stack.Screen name="Book Appointment" component={BookRevamp} />
+        <Stack.Screen name="Book" component={BookingScreen} />
+        <Stack.Screen name="Cart" component={Cart} />
       </Stack.Navigator>
     </NavigationContainer>
      </PaperProvider>
